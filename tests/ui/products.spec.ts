@@ -8,7 +8,7 @@ test('check that list of products is visible', async ({ productsPage }) => {
     await expect(productsPage.itemList).toBeVisible
 })
 
-test('check search', async ({ productsPage }) => {
+test('search for product', async ({ productsPage }) => {
     await productsPage.searchProduct('dress')
     const resultCount = await productsPage.itemList.count()
     expect(resultCount).toBeGreaterThan(0)
