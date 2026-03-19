@@ -1,22 +1,20 @@
-import { test, expect } from '@playwright/test'
-import { ApiClient } from "../../utils/ApiClient";
+import { test, expect } from '../../fixtures/fixture'
 
-let api: ApiClient
-
-test.beforeEach('init apiClient', async({request}) => {
-    api = new ApiClient(request)
+test.describe('api tests for product page', () => {
+    test('GET list of products', async ({ api }) => {
+        const response = await api.get('/api/productsList')
+        expect(response.ok()).toBe(true)
+        const data = await response.json()
+        expect(data.products.length).toBeGreaterThan(0)
+    })
+    
+    test('POST search for product', async ({api}) => {
+        const response = await api.postForm('/api/searchProduct', { search_product: 'dress' })
+        expect(response.ok()).toBe(true)
+        const data = await response.json()
+        expect(data.products.length).toBeGreaterThan(0)
+    })
 })
 
-test('GET list of products', async ({}) => {
-    const response = await api.get('/api/productsList')
-    expect(response.ok()).toBe(true)
-    const data = await response.json()
-    expect(data.products.length).toBeGreaterThan(0)
-})
 
-test('POST search for product', async ({}) => {
-    const response = await api.post('/api/searchProduct', { search_product: 'dress' })
-    expect(response.ok()).toBe(true)
-    const data = await response.json()
-    expect(data.products.length).toBeGreaterThan(0)
-})
+

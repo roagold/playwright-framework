@@ -1,6 +1,5 @@
 import { APIRequestContext } from '@playwright/test'
 
-
 export class ApiClient {
     private readonly request: APIRequestContext
     private readonly baseURL: string
@@ -15,8 +14,13 @@ export class ApiClient {
         return response
     }
 
-    async post(endpoint: string, body: Record<string, string>){
+    async postForm(endpoint: string, body: Record<string, string | number | boolean>){
         const response = await this.request.post(`${this.baseURL}${endpoint}`, { form: body })
+        return response
+    }
+
+        async postJson(endpoint: string, body: object){
+        const response = await this.request.post(`${this.baseURL}${endpoint}`, { data: body})
         return response
     }
 }
