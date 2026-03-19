@@ -7,6 +7,7 @@ interface Product {
 }
 
 export class ProductsPage extends BasePage {
+    readonly itemListContainer: Locator
     readonly itemList: Locator
     readonly searchInput: Locator
     readonly searchButton: Locator
@@ -16,7 +17,8 @@ export class ProductsPage extends BasePage {
 
     constructor(page: Page) {
         super(page)
-        this.itemList = this.page.locator('.features_items .col-sm-4');
+        this.itemListContainer = this.page.locator('.features_items')
+        this.itemList = this.itemListContainer.locator('.col-sm-4');
         this.searchInput = this.page.locator('#search_product')
         this.searchButton = this.page.locator('#submit_search')
         this.itemListTitle = this.page.locator('.features_items .title')
